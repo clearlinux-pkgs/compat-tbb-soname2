@@ -4,7 +4,7 @@
 #
 Name     : compat-tbb-soname2
 Version  : 2019.u9
-Release  : 31
+Release  : 32
 URL      : https://github.com/01org/tbb/archive/2019_U9/tbb-2019.U9.tar.gz
 Source0  : https://github.com/01org/tbb/archive/2019_U9/tbb-2019.U9.tar.gz
 Summary  : No detailed summary available
@@ -52,7 +52,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1640296982
+export SOURCE_DATE_EPOCH=1640297400
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -65,12 +65,14 @@ make  %{?_smp_mflags}  DEFAULTFLAGS="$CFLAGS"
 
 
 %install
-export SOURCE_DATE_EPOCH=1640296982
+export SOURCE_DATE_EPOCH=1640297400
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/compat-tbb-soname2
 cp %{_builddir}/oneTBB-2019_U9/LICENSE %{buildroot}/usr/share/package-licenses/compat-tbb-soname2/7df059597099bb7dcf25d2a9aedfaf4465f72d8d
 %make_install
 ## Remove excluded files
+rm -f %{buildroot}*/usr/lib64/libtbbmalloc.so.2
+rm -f %{buildroot}*/usr/lib64/libtbbmalloc_proxy.so.2
 rm -f %{buildroot}*/usr/include/serial/tbb/parallel_for.h
 rm -f %{buildroot}*/usr/include/serial/tbb/tbb_annotate.h
 rm -f %{buildroot}*/usr/include/tbb/aggregator.h
@@ -202,8 +204,6 @@ rm -f %{buildroot}*/usr/lib64/libtbbmalloc_proxy.so
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libtbb.so.2
-/usr/lib64/libtbbmalloc.so.2
-/usr/lib64/libtbbmalloc_proxy.so.2
 
 %files license
 %defattr(0644,root,root,0755)
